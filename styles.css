@@ -1,0 +1,19 @@
+:root {
+    --bg: #0f1221;
+    --body-bg: #0b0f1d;
+    --muted: #8b93a7;
+    --txt: #e9ecf1;
+    --brand: #7dd3fc;
+    --brand-2: #60a5fa;
+    --ok: #22c55e;
+    --warn: #eab308;
+    --err: #ef4444;
+    --radius: 18px;
+    --gap: 14px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
