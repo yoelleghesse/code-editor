@@ -92,4 +92,72 @@ function showPane(name) {
             t.setAttribute("aria-selected", on);
             t.tabIndex = on ? 0 : -1;
         });
+
+        requestAnimationFrame(() => {
+            const ed = editors[name];
+            if (ed && ed.resize) {
+                ed.resize(true);
+                ed.focus();
+            }
+        })
+}
+
+$("#webTabs")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab");
+    if (!btn) {
+        return;
+    }
+    showPane(btn.dataset.pane);
+})
+
+$("#webTabs")?.addEventListener("keydown", (e) => {
+    const idx = TAB_ORDER.indexOf(activePane());
+    if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        const delta = e.key === "ArrowLeft" ? -1 : 1;
+        showPane(TAB_ORDER[(idx+delta + TAB_ORDER.length) % TAB_ORDER.length])
+    }
+})
+
+showPane("html");
+
+function buildwebSrcdoc(withTests=false) {
+    const html = ed_html.getValue();
+    const css = ed_css.getValue();
+    const js = ed_js.getValue();
+    const tests = ($("#testArea")?.value || "").trim();
+
+    return `
+    <!DOCTYPE html>
+
+    <html lang="en" dir="ltr">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+            <style>
+                ${css}\n</style></head>
+
+                <body>  
+                    ${html}
+
+                    <script>
+                        try {
+
+                        ${js}
+
+                        ${withTests && tests ? `\n/* tests*/\n${tests}`:''}
+                        
+                        } catch (e) {
+                            console.error(e)
+                        }
+                        
+                    <\/script>
+                </body>
+
+            <style>
+
+        <head>
+        
+    </html>`;
 }
