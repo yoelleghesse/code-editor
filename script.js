@@ -223,7 +223,7 @@ function saveProject() {
     try {
         const data = JSON.stringify(projectJSON(), null, 2);
         localStorage.setItem(STORAGE_KEY, data);
-        const blob = new Blob([data], {tyle: "application/json"});
+        const blob = new Blob([data], {type: "application/json"});
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
         a.download = "code-editor.json";
@@ -236,7 +236,7 @@ function saveProject() {
 }
 
 $("#saveBtn")?.addEventListener("click", saveProject);
-$("loadBtn")?.addEventListener("click", () => $("openFile").clicl());
+$("#loadBtn")?.addEventListener("click", () => $("openFile").clicl());
 $("#openFile")?.addEventListener("change", async (e) => {
     const f = e.target.files?.[0];
     if (!f) {
