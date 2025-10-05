@@ -158,6 +158,62 @@ function buildwebSrcdoc(withTests=false) {
             <style>
 
         <head>
-        
+
     </html>`;
+}
+
+function runWeb(withTests=false) {
+    preview.srcdoc = buildwebSrcdoc(withTests);
+    log(withTests ? "Run with tests" : "Web preview updated.");
+} 
+
+$("#runWeb")?.addEventListener("click", () => runWeb(false));
+
+$("#runTests")?.addEventListener("click", () => runWeb(true));
+
+$("#openPreview")?.addEventListener("click", () => {
+    const src = buildwebSrcdoc(false);
+
+    const w = window.open("about:blank")
+
+    w.document.open();
+    w.document.write(src);
+    w.document.close(); // close the window to prevent losing resources
+});
+
+function projectJSON() {
+    return {
+        version: 1,
+        kind: "web-only", 
+        assignment: $("#assignment")?.value || "",
+        test: $("#testArea")?.value || "",
+        html: ed_html.getValue(),
+        css: ed_css.getValue(),
+        js: ed_js.getValue()
+    };
+}
+
+function loadProject(obj) {
+    try {
+        if ($('#assignment')) $("#assignment").value = obj.assignment || "";
+
+        if ($("#testArea")) $("#testArea").value = obj.test || "";
+
+        ed_html.setValue(obj.html || "", -1);
+
+        ed_css.setValue(obj.css || "", -1);
+
+        ed_js.setValue(obj.js || "", -1);
+
+        log("Web project loaded.");
+    } catch (e) {
+        log("Unable to load project: " + e, "error");
+    }
+}
+
+
+function setDefaultContent() {
+    ed_html.setValue(`<!-- Write your html code here... -->`, -1);
+    ed_css.setValue(`/* Write your css code here... */`, -1);
+    ed_js.setValue(`// Write your javascript code here... `, -1)
 }
