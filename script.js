@@ -55,13 +55,13 @@ function makeEditor(id, mode) {
             win: "Ctrl-S",
             mac: "Command-S"
         },
-        exec(){saveproject();}
+        exec(){saveProject();}
     });
 
     return ed
 }
 
-const ed_html = makeEditor("ed_html", "ace/theme/html");
+const ed_html = makeEditor("ed_html", "ace/mode/html");
 const ed_css = makeEditor("ed_css", "ace/mode/css");
 const ed_js = makeEditor("ed_js", "ace/mode/javascript");
 
