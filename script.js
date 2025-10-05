@@ -217,3 +217,50 @@ function setDefaultContent() {
     ed_css.setValue(`/* Write your css code here... */`, -1);
     ed_js.setValue(`// Write your javascript code here... `, -1)
 }
+
+
+function saveProject() {
+    try {
+        const data = JSON.stringify(projectJSON(), null, 2);
+        localStorage.setItem(STORAGE_KEY, data);
+        const blob = new Blob([data], {tyle: "application/json"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "code-editor.json";
+        a.click(); // clicks on the element
+        log("Saved locally and downloaded JSON file");
+
+    } catch (e) {
+        log("Unable to save: " + e, "error");
+    }
+}
+
+$("#saveBtn")?.addEventListener("click", saveProject);
+$("loadBtn")?.addEventListener("click", () => $("openFile").clicl());
+$("#openFile")?.addEventListener("change", async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) {
+        return;
+    }
+    try {
+        const obj = JSON.parse(await f.text());
+        loadProject(obj);
+
+    } catch (e) {
+        log("Invalid project file", "error");
+    }
+});
+
+try {
+    const cache = localStorage.getItem(STORAGE_KEY);
+    if (cache) {
+        loadProject(JSON.parse(cache));
+    } else {
+        setDefaultContent();
+    }
+    
+} catch {
+    setDefaultContent();
+}
+
+log("Ready - Web only Editor (HTML / CSS / JS");
