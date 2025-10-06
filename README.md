@@ -1,5 +1,7 @@
 # Web Editor (HTML/CSS/JS)
 
+Built following the Code Editor tutorial provided by FCC.
+
 A simple in-browser code editor built with **ACE Editor** that lets you write, preview, and save HTML, CSS, and JavaScript projects.
 
 ## Features
