@@ -6,9 +6,9 @@ const preview = $("#preview");
 const STORAGE_KEY = "code-editor";
 
 const escapeHtml = s => 
-    String(s).replace(/[&<>""]/g, c => ({
+    String(s).replace(/[&<>"]/g, c => ({
         '&': "&amp;",
-        '<': "lt;", 
+        '<': "&lt;", 
         ">": "&gt;", 
         '"': "&quot;",
     }[c]
@@ -21,7 +21,7 @@ function log(msg, type='info') {
 
     const line = document.createElement("div")
 
-    line.innerHTML = `<span style="color: ${color}">[${tune}]</span> ${escapeHtml(msg)}`;
+    line.innerHTML = `<span style="color: ${color}">[${time}]</span> ${escapeHtml(msg)}`;
 
     out.appendChild(line);
     out.scrollTop = out.scrollHeight;
@@ -155,10 +155,6 @@ function buildwebSrcdoc(withTests=false) {
                     <\/script>
                 </body>
 
-            <style>
-
-        <head>
-
     </html>`;
 }
 
@@ -236,7 +232,7 @@ function saveProject() {
 }
 
 $("#saveBtn")?.addEventListener("click", saveProject);
-$("#loadBtn")?.addEventListener("click", () => $("openFile").clicl());
+$("#loadBtn")?.addEventListener("click", () => $("#openFile").click());
 $("#openFile")?.addEventListener("change", async (e) => {
     const f = e.target.files?.[0];
     if (!f) {
@@ -263,4 +259,4 @@ try {
     setDefaultContent();
 }
 
-log("Ready - Web only Editor (HTML / CSS / JS");
+log("Ready - Web only Editor (HTML / CSS / JS)");
